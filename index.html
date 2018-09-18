@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src='https://js.paystack.co/v1/inline.js'></script>
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <!-- <script src="main.js"></script> -->
+</head>
+<body>
+    <h1>Paystack API payment gateway</h1>
+    <button onclick="makePayment('pk_test_6755e34c3e7aeb707a5b082bf2ee059d11cbd5e7', 'Horlasco34@gmail.com', Math.ceil(Math.random() * 100000))"
+            class="paymentBtn">
+        Make Payment
+    </button>
+    <div id="responseDiv">
+
+    </div>
+</body>
+<script type="text/javascript">
+    function makePayment(key, email, amount, ref, callback) {
+        var handler = PaystackPop.setup({
+            key: key, // This is your public key only! 
+            email: email || 'customer@email.com', // Customers email
+            // amount: amount || Math.ceil(Math.random() * 100000), // The amount charged
+            amount: 10000, // The amount charged
+            ref: Math.ceil(Math.random() * 10000), // Generate a random reference number and put here",
+            metadata: { // More custom information about the transaction
+             custom_fields: [
+                {}
+             ]
+            },
+            callback: callback || function(response){
+              let responseDiv = document.getElementById("responseDiv") 
+              responseDiv.innerHTML = "Your transaction reference number is </br />" + response.reference;
+            },
+            onClose: function(){
+              alert('window closed');
+            }
+        });
+        // Payment Request Just Fired  
+        handler.openIframe(); 
+    }
+</script>
+
+</html>
